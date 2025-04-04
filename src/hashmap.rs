@@ -1,3 +1,20 @@
+use std::collections::HashMap;
+
+fn main() {
+    let mut map: HashMap<String, i16> = HashMap::new();
+
+    map.insert(String::from("chaitanya"), 21);
+    map.insert(String::from("Reet"), 20);
+
+    let my_age = map.get("c5haitanya");
+
+    match my_age {
+        Some(age) => println!("age is {}", age),
+        None => println!("No key exists for the given input"),
+    }
+}
+
+// problem: create a hashmap from a vector of tuples as key: value pairs
 use std::{collections::HashMap, vec};
 
 fn main() {
