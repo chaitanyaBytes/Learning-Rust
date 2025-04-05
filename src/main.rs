@@ -1,9 +1,16 @@
 fn main() {
-    let mut vec = vec![10, 20, 30, 40];
+    let s = String::from("Chaitanya gupta");
+    println!("{}", s);
 
-    let iter = vec.iter().filter(|x| *x % 4 == 0).map(|x| x + 1);
+    let mut ind = 0;
+    for i in s.chars() {
+        if i == ' ' {
+            break;
+        }
+        ind += 1;
+    }
 
-    vec = iter.collect();
-
-    println!("{:?}", vec);
+    let slice = &s[0..ind];
+    println!("{}", slice);
+    println!("{}", s);
 }
