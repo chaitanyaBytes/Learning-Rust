@@ -1,4 +1,5 @@
 use std::{sync::mpsc, thread};
+// for sending data across multiple thread and main thread as well
 
 fn main() {
     let (tx, rx) = mpsc::channel();
