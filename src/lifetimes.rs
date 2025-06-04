@@ -80,8 +80,13 @@ where
 fn main() {
     let long_str;
     let s1 = String::from("hello");
-    let s2 = String::from("Weorld");
-    long_str = longest(&s1, &s2, String::from("Hello world"));
-
-    println!("longest string is {}", long_str);
+    {
+        let s2 = String::from("Weorld");
+        long_str = longest(&s1, &s2, String::from("Hello world"));
+        println!("longest string is {}", long_str);
+    }
 }
+
+// The returned string slice will live as long as both s1 and s2 — or more specifically, as long as the shortest of their lifetimes.
+// Lifetimes don’t change how long something actually lives — they just describe it.
+// You're right: it's like saying "this return reference is tied to the lifetime of the inputs."

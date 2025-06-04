@@ -1,28 +1,24 @@
-use std::{sync::mpsc, thread};
+// lifetimes with generics
+use std::fmt::Display;
+fn longest<'a, T>(s1: &'a str, s2: &'a str, ann: T) -> &'a str
+where
+    T: Display,
+{
+    // generic lifetime annotation
+    println!("announcment! {ann}");
+    if s1.len() > s2.len() {
+        s1
+    } else {
+        s2
+    }
+}
 
 fn main() {
-    let (tx, rx) = mpsc::channel();
-
-    for i in 0..10 {
-        let producer = tx.clone();
-
-        thread::spawn(move || {
-            let mut sum: u64 = 0;
-            for j in 1..10000000 {
-                sum = sum + (i * 10000000 + j);
-            }
-
-            producer.send(sum).unwrap();
-        });
+    let long_str;
+    let s1 = String::from("hello");
+    {
+        let s2 = String::from("Weorld");
+        long_str = longest(&s1, &s2, String::from("Hello world"));
+        println!("longest string is {}", long_str);
     }
-    drop(tx);
-    // "Okay, I’m done sending from the main thread — no more messages will be sent."
-
-    let mut ans: u64 = 0;
-    for val in rx {
-        ans += val;
-        println!("recieved values");
-    }
-
-    println!("ans is {}", ans);
 }
