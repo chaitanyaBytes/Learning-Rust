@@ -1,24 +1,18 @@
-use borsh::{BorshDeserialize, BorshSerialize};
-
-#[derive(Debug, BorshDeserialize, BorshSerialize)]
-struct Person {
-    name: String,
-    age: u8,
-}
+use std::{thread, time::Duration};
 
 fn main() {
-    let person = Person {
-        name: String::from("Chaitanya"),
-        age: 21,
-    };
+    let handle = thread::spawn(|| {
+        for i in 1..10 {
+            println!("hi number {i} from spawned thread");
+            thread::sleep(Duration::from_millis(1));
+        }
+    });
 
-    let mut v: Vec<u8> = Vec::new();
+    // waits for the thread to finish and ond then starts the execution of the remaining code
+    handle.join().unwrap();
 
-    person.serialize(&mut v).unwrap();
-
-    println!("{:?}", v);
-
-    let p = Person::try_from_slice(&v);
-
-    println!("{:?}", p);
+    for i in 1..5 {
+        println!("hi number {i} from main thread");
+        thread::sleep(Duration::from_millis(1));
+    }
 }
